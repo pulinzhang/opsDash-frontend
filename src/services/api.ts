@@ -129,6 +129,14 @@ export const api = {
         }
         return r.data.data
       })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to fetch data')
+        }
+        throw error
+      })
   },
 
   listWithPagination<T>(resource: string, params?: Record<string, unknown>) {
@@ -143,6 +151,14 @@ export const api = {
           pagination: r.data.pagination,
         }
       })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to fetch data')
+        }
+        throw error
+      })
   },
   get<T>(resource: string, id: string) {
     return http
@@ -152,6 +168,14 @@ export const api = {
           throw new Error(r.data.message || 'Failed to fetch data')
         }
         return r.data.data
+      })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to fetch data')
+        }
+        throw error
       })
   },
   create<T>(resource: string, data: unknown) {
@@ -163,6 +187,14 @@ export const api = {
         }
         return r.data.data
       })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to create resource')
+        }
+        throw error
+      })
   },
   update<T>(resource: string, id: string, data: unknown) {
     return http
@@ -173,6 +205,14 @@ export const api = {
         }
         return r.data.data
       })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to update resource')
+        }
+        throw error
+      })
   },
   remove(resource: string, id: string) {
     return http
@@ -182,6 +222,14 @@ export const api = {
           throw new Error(r.data.message || 'Failed to delete resource')
         }
         return undefined
+      })
+      .catch((error) => {
+        // 如果是 HTTP 错误（如 403），尝试从响应体中获取错误消息
+        if (error.response?.data) {
+          const responseData = error.response.data as { message?: string }
+          throw new Error(responseData.message || 'Failed to delete resource')
+        }
+        throw error
       })
   },
 
