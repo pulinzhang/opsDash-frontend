@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Ensure react-toastify stays above Radix Dialog overlay/content (z-index: 99990/100000) */
+  --toastify-z-index: 110000;
 }
 
 *,
