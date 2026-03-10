@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface LogRow {
   _id: string
@@ -56,6 +57,11 @@ export const LogsPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['logs'] })
       setAddDialogOpen(false)
+      toast.success('Log created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create log')
     },
   })
 
@@ -66,6 +72,11 @@ export const LogsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['logs'] })
       setEditDialogOpen(false)
       setSelectedLog(null)
+      toast.success('Log updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update log')
     },
   })
 
@@ -75,6 +86,11 @@ export const LogsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['logs'] })
       setDeleteDialogOpen(false)
       setSelectedLog(null)
+      toast.success('Log deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete log')
     },
   })
 

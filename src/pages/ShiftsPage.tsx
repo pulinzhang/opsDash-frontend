@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface ShiftRow {
   _id: string
@@ -56,6 +57,11 @@ export const ShiftsPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
       setAddDialogOpen(false)
+      toast.success('Shift created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create shift')
     },
   })
 
@@ -66,6 +72,11 @@ export const ShiftsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
       setEditDialogOpen(false)
       setSelectedShift(null)
+      toast.success('Shift updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update shift')
     },
   })
 
@@ -75,6 +86,11 @@ export const ShiftsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
       setDeleteDialogOpen(false)
       setSelectedShift(null)
+      toast.success('Shift deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete shift')
     },
   })
 

@@ -6,6 +6,7 @@ import type { AgGridReact as AgGridReactType } from 'ag-grid-react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface UserRow {
   _id: string
@@ -57,6 +58,11 @@ export const UsersPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] })
       setAddDialogOpen(false)
+      toast.success('User created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create user')
     },
   })
 
@@ -67,6 +73,11 @@ export const UsersPage = () => {
       queryClient.invalidateQueries({ queryKey: ['users'] })
       setEditDialogOpen(false)
       setSelectedUser(null)
+      toast.success('User updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update user')
     },
   })
 
@@ -76,6 +87,11 @@ export const UsersPage = () => {
       queryClient.invalidateQueries({ queryKey: ['users'] })
       setDeleteDialogOpen(false)
       setSelectedUser(null)
+      toast.success('User deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete user')
     },
   })
 

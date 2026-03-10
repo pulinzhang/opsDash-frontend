@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface HandoverLogRow {
   _id: string
@@ -58,6 +59,11 @@ export const HandoverLogsPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['handover-logs'] })
       setAddDialogOpen(false)
+      toast.success('Handover log created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create handover log')
     },
   })
 
@@ -68,6 +74,11 @@ export const HandoverLogsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['handover-logs'] })
       setEditDialogOpen(false)
       setSelectedLog(null)
+      toast.success('Handover log updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update handover log')
     },
   })
 
@@ -77,6 +88,11 @@ export const HandoverLogsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['handover-logs'] })
       setDeleteDialogOpen(false)
       setSelectedLog(null)
+      toast.success('Handover log deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete handover log')
     },
   })
 

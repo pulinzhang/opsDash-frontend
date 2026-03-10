@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface ReportRow {
   _id: string
@@ -60,6 +61,11 @@ export const ReportsPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reports'] })
       setAddDialogOpen(false)
+      toast.success('Report created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create report')
     },
   })
 
@@ -70,6 +76,11 @@ export const ReportsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['reports'] })
       setEditDialogOpen(false)
       setSelectedReport(null)
+      toast.success('Report updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update report')
     },
   })
 
@@ -79,6 +90,11 @@ export const ReportsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['reports'] })
       setDeleteDialogOpen(false)
       setSelectedReport(null)
+      toast.success('Report deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete report')
     },
   })
 

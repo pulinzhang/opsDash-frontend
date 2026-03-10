@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface IncidentRow {
   _id: string
@@ -58,6 +59,11 @@ export const IncidentsPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] })
       setAddDialogOpen(false)
+      toast.success('Incident created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create incident')
     },
   })
 
@@ -68,6 +74,11 @@ export const IncidentsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] })
       setEditDialogOpen(false)
       setSelectedIncident(null)
+      toast.success('Incident updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update incident')
     },
   })
 
@@ -77,6 +88,11 @@ export const IncidentsPage = () => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] })
       setDeleteDialogOpen(false)
       setSelectedIncident(null)
+      toast.success('Incident deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete incident')
     },
   })
 

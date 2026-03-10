@@ -122,35 +122,67 @@ export const api = {
   // Generic CRUD helpers (backend wraps responses in a standard ApiResponse<T>)
   list<T>(resource: string, params?: Record<string, unknown>) {
     return http
-      .get<{ data: T[] }>(`/${resource}`, { params })
-      .then((r) => r.data.data)
+      .get<{ data: T[]; success: boolean; message?: string }>(`/${resource}`, { params })
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to fetch data')
+        }
+        return r.data.data
+      })
   },
 
   listWithPagination<T>(resource: string, params?: Record<string, unknown>) {
     return http
-      .get<{ data: T[]; pagination?: PaginationInfo }>(`/${resource}`, { params })
-      .then((r) => ({
-        data: r.data.data,
-        pagination: r.data.pagination,
-      }))
+      .get<{ data: T[]; pagination?: PaginationInfo; success: boolean; message?: string }>(`/${resource}`, { params })
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to fetch data')
+        }
+        return {
+          data: r.data.data,
+          pagination: r.data.pagination,
+        }
+      })
   },
   get<T>(resource: string, id: string) {
     return http
-      .get<{ data: T }>(`/${resource}/${id}`)
-      .then((r) => r.data.data)
+      .get<{ data: T; success: boolean; message?: string }>(`/${resource}/${id}`)
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to fetch data')
+        }
+        return r.data.data
+      })
   },
   create<T>(resource: string, data: unknown) {
     return http
-      .post<{ data: T }>(`/${resource}`, data)
-      .then((r) => r.data.data)
+      .post<{ data: T; success: boolean; message?: string }>(`/${resource}`, data)
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to create resource')
+        }
+        return r.data.data
+      })
   },
   update<T>(resource: string, id: string, data: unknown) {
     return http
-      .put<{ data: T }>(`/${resource}/${id}`, data)
-      .then((r) => r.data.data)
+      .put<{ data: T; success: boolean; message?: string }>(`/${resource}/${id}`, data)
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to update resource')
+        }
+        return r.data.data
+      })
   },
   remove(resource: string, id: string) {
-    return http.delete(`/${resource}/${id}`).then(() => undefined)
+    return http
+      .delete<{ success: boolean; message?: string }>(`/${resource}/${id}`)
+      .then((r) => {
+        if (!r.data.success) {
+          throw new Error(r.data.message || 'Failed to delete resource')
+        }
+        return undefined
+      })
   },
 
   // Dashboard

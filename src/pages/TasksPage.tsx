@@ -12,6 +12,7 @@ import type {
 import * as Dialog from '@radix-ui/react-dialog'
 import { api, type PaginationInfo } from '../services/api'
 import { DialogFooter } from '../components/DialogFooter'
+import { toast } from 'react-toastify'
 
 interface TaskRow {
   _id: string
@@ -58,6 +59,11 @@ export const TasksPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       setAddDialogOpen(false)
+      toast.success('Task created successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to create task')
     },
   })
 
@@ -68,6 +74,11 @@ export const TasksPage = () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       setEditDialogOpen(false)
       setSelectedTask(null)
+      toast.success('Task updated successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to update task')
     },
   })
 
@@ -77,6 +88,11 @@ export const TasksPage = () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       setDeleteDialogOpen(false)
       setSelectedTask(null)
+      toast.success('Task deleted successfully')
+    },
+    onError: (error: unknown) => {
+      const err = error as Error
+      toast.error(err.message || 'Failed to delete task')
     },
   })
 
