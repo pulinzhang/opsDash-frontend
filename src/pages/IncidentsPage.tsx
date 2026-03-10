@@ -148,7 +148,9 @@ export const IncidentsPage = () => {
           field: 'title',
           headerName: 'Title',
           flex: 1,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: IncidentRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm font-medium text-gray-900">
@@ -161,7 +163,9 @@ export const IncidentsPage = () => {
           field: 'severity',
           headerName: 'Severity',
           flex: 0.8,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: IncidentRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm text-gray-700">
@@ -174,7 +178,9 @@ export const IncidentsPage = () => {
           field: 'status',
           headerName: 'Status',
           flex: 0.8,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: IncidentRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm text-gray-700">
@@ -186,7 +192,9 @@ export const IncidentsPage = () => {
         {
           headerName: 'Actions',
           flex: 1,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: IncidentRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <div className="flex h-full items-center justify-end gap-3">

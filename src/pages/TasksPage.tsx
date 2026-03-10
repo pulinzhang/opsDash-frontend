@@ -148,7 +148,9 @@ export const TasksPage = () => {
           field: 'title',
           headerName: 'Title',
           flex: 1.4,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: TaskRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm font-medium text-gray-900">
@@ -161,7 +163,9 @@ export const TasksPage = () => {
           field: 'status',
           headerName: 'Status',
           flex: 0.8,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: TaskRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm text-gray-700">
@@ -174,7 +178,9 @@ export const TasksPage = () => {
           field: 'priority',
           headerName: 'Priority',
           flex: 0.8,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: TaskRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm text-gray-700">
@@ -186,7 +192,9 @@ export const TasksPage = () => {
         {
           headerName: 'Actions',
           flex: 1,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: TaskRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <div className="flex h-full items-center justify-end gap-3">

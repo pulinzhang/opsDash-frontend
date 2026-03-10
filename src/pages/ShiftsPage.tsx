@@ -145,7 +145,9 @@ export const ShiftsPage = () => {
           field: 'name',
           headerName: 'Name',
           flex: 1,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: ShiftRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm font-medium text-gray-900">
@@ -158,7 +160,9 @@ export const ShiftsPage = () => {
           field: 'status',
           headerName: 'Status',
           flex: 0.8,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: ShiftRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm text-gray-700">
@@ -170,7 +174,9 @@ export const ShiftsPage = () => {
         {
           headerName: 'Actions',
           flex: 1,
-          cellRenderer: (params) => {
+          cellRenderer: (
+            params: { data?: ShiftRow & { _isPlaceholder?: boolean } },
+          ) => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <div className="flex h-full items-center justify-end gap-3">
