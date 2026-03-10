@@ -15,12 +15,12 @@ import { DialogFooter } from '../components/DialogFooter'
 
 interface ShiftRow {
   _id: string
-  name?: string
+  title?: string
   status?: string
 }
 
 interface ShiftFormData {
-  name: string
+  title: string
   status?: string
 }
 
@@ -94,7 +94,7 @@ export const ShiftsPage = () => {
       } else {
         fullData.push({
           _id: `placeholder-${i}`,
-          name: '',
+          title: '',
           status: '',
           _isPlaceholder: true,
         })
@@ -142,7 +142,7 @@ export const ShiftsPage = () => {
     useMemo(
       () => [
         {
-          field: 'name',
+          field: 'title',
           headerName: 'Name',
           flex: 1,
           cellRenderer: (
@@ -151,7 +151,7 @@ export const ShiftsPage = () => {
             if (!params.data || params.data._isPlaceholder) return ''
             return (
               <span className="text-sm font-medium text-gray-900">
-                {params.data.name}
+                {params.data.title}
               </span>
             )
           },
@@ -350,7 +350,7 @@ function AddShiftDialog({
   isLoading: boolean
 }) {
   const [formData, setFormData] = useState<ShiftFormData>({
-    name: '',
+    title: '',
     status: '',
   })
   const [errors, setErrors] = useState<Partial<Record<keyof ShiftFormData, string>>>(
@@ -361,8 +361,8 @@ function AddShiftDialog({
     e.preventDefault()
     const newErrors: Partial<Record<keyof ShiftFormData, string>> = {}
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
+    if (!formData.title.trim()) {
+      newErrors.title = 'Name is required'
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -378,7 +378,7 @@ function AddShiftDialog({
     if (newOpen) {
       onOpenChange(true)
     } else if (!isLoading) {
-      setFormData({ name: '', status: '' })
+      setFormData({ title: '', status: '' })
       setErrors({})
       onOpenChange(false)
     }
@@ -408,16 +408,16 @@ function AddShiftDialog({
                   <input
                     id="add-shift-name"
                     type="text"
-                    value={formData.name}
+                    value={formData.title}
                     onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
+                      setFormData({ ...formData, title: e.target.value })
                     }
-                    className={`opsdash-input ${errors.name ? 'border-red-300' : ''}`}
+                    className={`opsdash-input ${errors.title ? 'border-red-300' : ''}`}
                     placeholder="Day shift, Night shift..."
                     disabled={isLoading}
                   />
-                  {errors.name && (
-                    <p className="opsdash-error">{errors.name}</p>
+                  {errors.title && (
+                    <p className="opsdash-error">{errors.title}</p>
                   )}
                 </div>
 
@@ -479,7 +479,7 @@ function EditShiftDialog({
   isLoading: boolean
 }) {
   const [formData, setFormData] = useState<Partial<ShiftFormData>>({
-    name: shift.name ?? '',
+    title: shift.title ?? '',
     status: shift.status ?? '',
   })
   const [errors, setErrors] = useState<Partial<Record<keyof ShiftFormData, string>>>(
@@ -488,7 +488,7 @@ function EditShiftDialog({
 
   useEffect(() => {
     setFormData({
-      name: shift.name ?? '',
+      title: shift.title ?? '',
       status: shift.status ?? '',
     })
     setErrors({})
@@ -498,8 +498,8 @@ function EditShiftDialog({
     e.preventDefault()
     const newErrors: Partial<Record<keyof ShiftFormData, string>> = {}
 
-    if (!formData.name?.trim()) {
-      newErrors.name = 'Name is required'
+    if (!formData.title?.trim()) {
+      newErrors.title = 'Name is required'
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -544,15 +544,15 @@ function EditShiftDialog({
                   <input
                     id="edit-shift-name"
                     type="text"
-                    value={formData.name ?? ''}
+                    value={formData.title ?? ''}
                     onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
+                      setFormData({ ...formData, title: e.target.value })
                     }
-                    className={`opsdash-input ${errors.name ? 'border-red-300' : ''}`}
+                    className={`opsdash-input ${errors.title ? 'border-red-300' : ''}`}
                     disabled={isLoading}
                   />
-                  {errors.name && (
-                    <p className="opsdash-error">{errors.name}</p>
+                  {errors.title && (
+                    <p className="opsdash-error">{errors.title}</p>
                   )}
                 </div>
 
@@ -631,7 +631,7 @@ function DeleteShiftDialog({
             </Dialog.Title>
             <Dialog.Description className="opsdash-dialog-description">
               Are you sure you want to delete{' '}
-              <strong>{shift.name ?? 'this shift'}</strong>? This action cannot be
+              <strong>{shift.title ?? 'this shift'}</strong>? This action cannot be
               undone.
             </Dialog.Description>
           </div>
