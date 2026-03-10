@@ -54,23 +54,14 @@ export const UsersPage = () => {
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: (userData: UserFormData) => {
-      console.log('Creating user with data:', userData)
-      return api.create<UserRow>('users', userData).catch((err) => {
-        console.error('API create error:', err)
-        throw err
-      })
-    },
+    mutationFn: (userData: UserFormData) => api.create<UserRow>('users', userData),
     onSuccess: () => {
-      console.log('User created successfully')
       queryClient.invalidateQueries({ queryKey: ['users'] })
       setAddDialogOpen(false)
       toast.success('User created successfully')
     },
     onError: (error: unknown) => {
-      console.error('Mutation error:', error)
       const err = error as Error
-      console.error('Error message:', err.message)
       toast.error(err.message || 'Failed to create user')
     },
   })
